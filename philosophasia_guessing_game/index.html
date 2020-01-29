@@ -1,0 +1,159 @@
+<html>
+<head>
+<title>Цитаты философов vs Образцы шизофазии</title>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,700&amp;subset=cyrillic" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Bad+Script|Caveat|Pacifico" rel="stylesheet">
+<link rel="icon" href="icon.ico">
+<style>
+	body {
+		text-align: center;
+		font-family: "EB Garamond", serif;
+		font-size: 16px;
+	}
+	a {
+		color: black;
+	}
+	h1 {
+		font-family: "Russo One", serif;
+		letter-spacing: 2px;
+	}
+	.intro {
+		width: 80%;
+		max-width: 1000px;
+		margin: auto;
+	}
+	.content>div {
+		border-radius: 5px;
+		border: 3px solid black;
+		margin: 20px auto;
+		padding: 10px;
+		width: 80%;
+		max-width: 1000px;
+	}
+	button {
+		border-radius: 5px;
+		border: 2px solid black;
+		margin: 5px;
+		padding: 5px 10px;
+		height: 30px;
+		background-color: white;
+		font-weight: bold;
+		font-family: "Russo One", sans-serif;
+		font-size: 14px;
+	}
+	.quote {
+		margin-bottom: 10px;
+		font-family: 'Caveat', cursive;
+		font-size: 20px;
+	}
+	.quote:before {  
+    	content: "«";
+		font-weight: bold;
+		font-family: 'Caveat', cursive;
+	}  
+	.quote:after {  
+    	content: "»";
+		font-weight: bold;
+		font-family: 'Caveat', cursive;
+	}  
+	.description {
+		display: none;
+	}
+	.valid .description, .invalid .description {
+		display: block;
+		margin: 5px auto;
+		padding: 5px;
+		min-height: 23px;
+		height: auto;
+		width: 80%;
+	}
+	.valid .description {
+		border: 1px solid green;
+		background-color: #ccFFcc;
+	}
+	.invalid .description {
+		border: 1px solid red;
+		background-color: #FFcccc;
+	}
+	.valid button, .invalid button {
+		display: none;
+	}
+	.result {
+		background-color: #000000;
+		color: #ffffff;
+	}
+	@media (max-width: 1200px) {
+		.valid .description, .invalid .description {
+			width: 90%;
+		}
+	}
+	@media (max-width: 800px) {
+		.intro {
+			width: 95%;
+		}
+		.content>div {
+			width: 90%;
+		}
+		button {
+			width: 40%;
+			height: auto;
+		}
+	}
+</style>
+</head>
+<body>
+<h1>Цитаты философов vs Образцы шизофазии</h1>
+<div class="intro"><p>Ниже приведены несколько цитат философов – великих абсолютно или относительно – и несколько хрестоматийных образцов шизофазии, а также прочие экземляры откровенного бреда.</p>
+	<p>Попробуйте угадать, что есть что.</p></div>
+<div class="content"></div>
+<script>
+var answers = 0;
+var correctAnswers = 0;
+const quotes = [["Предметность мира становится по-стоянной в пред-ставляющем про-изводстве. Это пред-ставление – пред-ставляет (ставит перед, делает на-стоящим). Но это на-стоящее на-стает в пред-ставлении, которое есть расчет.", true, "М. Хайдеггер «К чему поэты?», перевод А.Г. Дугина."], ["Эта ручка имеет что-то существенное. Если бы мы ею не водили, она все равно могла бы совершиться чувством жизни, потому что мы к ней притронулись. В этой самой чрезвычайной простоте, изучая целый ряд наблюдений, я пришел к выводу, что она заражена нашей соучастливостью. Не было бы этих вразумляющих понятий, то такого обстоятельства никогда бы не случалось.", false, "Образец речи больного из работы А.С. и С.А. Овсянниковых «Шизофрения: патология мышления и речи»."], ["Прежде, чем изобретать, надо научиться разобретать.", false, "Цитата из <a href='https://vk.com/video303146650_456239089'>видео некоего Rudolf Fuchs</a>, генерирующего образцовый бред на двух языках."], ["Звук есть смена специфической внеположности материальных частей и ее отрицания, — он есть только абстрактная или, так сказать, только идеальная идеальность этой специфичности.", true, "Георг Гегель «Философия природы»"], ["Одним из вопросов, давно интересующих людей, является вопрос, для чего живет человек. Как и многие факты борьбы людей за жизнь говорят о том, что человек должен поддерживать свою жизнь, которой он обязан природе, не бессознательно, как животные, а как разумное и сознательное, теми действиями, которые приносят наибольшую пользу человечеству как роду.", false, "Образец речи больного из работы А.С. и С.А. Овсянниковых «Шизофрения: патология мышления и речи»."], ["Воспоминание-овнутрение возвращает навязывающе  волящую сущность и ее предметы ко внутреннейшему  невидимому сердечного пространства.", true, "М. Хайдеггер «К чему поэты?», перевод А.Г. Дугина."], ["Что на самом деле значит „Гусь“ в этой интерпретации? „Глаугол Угла Системы“ это как минимум, тогда „Гусь“ равен 1 градусу, „стадо гусей“ — 36 градусов. Вот где и как спрятаны наши сокровенные знания.", false, "Цитата из <a href='https://vk.com/doc191796867_138358496'>книги В.К. Романова «Начала Православной Арифметики»</a>. Сами судите, что это по сути."], ["Самой человеческой или гуманной профессией является пока медицина, а это все бы признали, если бы поняли отчетливо тесную зависимость голоса общественности, лица общества и медицины.", false, "Образец речи больного из работы А.С. и С.А. Овсянниковых «Шизофрения: патология мышления и речи»."], ["Этот благокруглый шар следует мыслить как бытие сущего в смысле открывающего-освещающего единого. Этот шар бытия и его сферичность никогда не следует представлять предметно. Но тогда как? Не предметно? Нет. Это была бы отговорка. Сферичность следует мыслить, отталкиваясь от сущности изначального бытия в смысле раскрывающего присутствия.", true, "М. Хайдеггер «К чему поэты?», перевод А.Г. Дугина."], ["В бытии есть место только у русского Начала, значит, все, что есть — русское. И все, что не есть, тоже русское. Значит, и европейский Dasein со своими посланцами и местными культурными коллаборационистами – тоже русский.", true, "А. Г. Дугин «Мартин Хайдеггер: возможность русской философии»"]];
+const allAnswered = new CustomEvent(Event);
+for (i=0; i<quotes.length; i++) {
+	var div = document.createElement("div");
+	div.innerHTML="<div class='quote'></div><button>Цитата философа</button><button>Образец шизофазии</button><div class='description'>";
+	div.querySelector('.quote').innerHTML = quotes[i][0];
+	div.querySelector('.description').innerHTML = quotes[i][2];
+	if (quotes[i][1] === true) {
+		div.querySelectorAll('button')[0].classList.add("correct");
+		div.querySelectorAll('button')[1].classList.add("incorrect");
+	}
+	else if (quotes[i][1] === false) {
+		div.querySelectorAll('button')[0].classList.add("incorrect");
+		div.querySelectorAll('button')[1].classList.add("correct");
+	}
+	document.documentElement.querySelector(".content").appendChild(div);
+}
+document.onclick = function(e) {
+	if (e.target.nodeName === "BUTTON") {
+		answers++;
+		if (e.target.classList.contains("correct")) {
+			e.target.parentNode.classList.add("valid");
+			correctAnswers++;
+		}
+		else if (e.target.classList.contains("incorrect")) {
+			e.target.parentNode.classList.add("invalid");
+		}
+		if (answers===quotes.length) {
+			var result = document.createElement("div");
+			result.classList.add("result");
+			result.innerHTML = "Ваш результат: " + correctAnswers.toString() + " из " + quotes.length.toString();
+			document.querySelector(".content").appendChild(result);
+		}
+	}
+}
+</script>
+<script>
+	if (window.devicePixelRatio !== 1) {	
+	  var dpt = window.devicePixelRatio;
+	  var widthM = window.screen.width * dpt;
+	  var widthH = window.screen.height * dpt;
+	  document.write('<meta name="viewport" content="width=' + widthM+ ', height=' + widthH + '">');
+	}
+</script>
+</body>
+</html>
