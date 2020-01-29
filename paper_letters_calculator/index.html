@@ -1,0 +1,277 @@
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css?family=Alegreya|Amatic+SC|Caveat|Comfortaa&display=swap" rel="stylesheet">
+<style>
+
+	body {
+		display: flex;
+		align-items: center;
+		vertical-align: middle;
+		flex-flow: column;
+		font-family: 'Caveat', cursive;
+		font-size: 18px;
+		background-color: white;
+		color: black;
+	}
+	div {
+		margin: 7px;
+	}
+	
+	input[type='text'] {
+		width: 30px;
+		border-radius: 5px;
+		font-family: 'Caveat', cursive;
+		font-size: 18px;
+		text-align: center;
+	}
+	select {
+		width: 100px;
+		border-radius: 5px;
+		font-family: 'Caveat', cursive;
+		font-size: 18px;
+		margin-left: 5px;
+	}
+	select option {
+		font-family: 'Caveat', cursive;
+		font-size: 18px;
+	}
+	h1 {
+		text-align: center;
+		font-family: 'Alegreya', serif;
+	}
+	button {
+		border-radius: 10px;
+		border: 3px solid #000000;
+		background-color: #ffffff;
+		padding: 5px 15px;
+		font-weight: bold;
+		font-family: 'Caveat', cursive;
+		font-size: 18px;
+	}
+	
+	.count {
+		display: grid;
+		grid-template-areas: "intro rus"
+							"intro other";
+		grid-template-rows: 1fr 1fr;
+		grid-template-columns: 250px 250px;
+		position: relative;
+		margin-left: 125px;
+	}
+	.count_intro {
+		grid-area: intro;
+		position: absolute;
+		transform: translateY(calc(50% + (0.5 * 1em)));
+	}
+	.count_rus {
+		grid-area: rus;
+	}
+	.count_other {
+		grid-area: other;
+	}
+	
+	.pc_count {
+		display: grid;
+		grid-template-areas: "pc_rus pc_other"
+							"pc_total pc_total";
+		grid-template-rows: 1fr 1fr;
+		grid-template-columns: 250px 250px;
+		margin-left: 125px;
+	}
+	.pc_rus {
+		grid-area: pc_rus;
+	}
+	.pc_other {
+		grid-area: pc_other;
+	}
+	.pc_total {
+		grid-area: pc_total;
+		text-align: center;
+		margin-left: -125px;
+	}
+	
+	.postcrossing {
+		font-weight: bold;
+	}
+	
+	.intro {
+		font-weight: bold;
+	}
+	.w, .m, .y {
+		margin: 5px;
+		margin-left: 50px;
+	}
+	.hidden {
+		display: none;
+	}
+</style>
+<script>
+var prices = {
+	letter_rus: 13 + 8,
+	pc_rus: 18,
+	letter_other: 45 + 8,
+	pc_other: 45
+}
+</script>
+</head>
+<body>
+<h1>Во сколько мне обходится бумажная переписка?</h1>
+<div class = "count"><div class="count_intro">Всего у меня собеседников</div>
+	<div class="count_rus">в России <input id="count_rus" type="text" placeholder="0"></div>
+	<div class="count_other">за границей <input id="count_other" type="text" placeholder="0"></div>
+</div>
+<div class = "total">В среднем я отправляю <input id="total" type="text" placeholder="0"> писем в <select id="total_pro">
+	<option>неделю</option>
+	<option>месяц</option>
+	<option>год</option>
+	</select></div>
+<div class="postcrossing"><input id="postcrossing" type="checkbox">Плюс посткроссинг!</div>
+<div class="pc_count hidden">
+	<div class="pc_rus"><input id="pc_rus" type="checkbox">по России</div>
+	<div class="pc_other"><input id="pc_other" type="checkbox">за границу</div>
+	<div class="pc_total"><input id="pc_total" type="text" placeholder="0"> открыток в <select id="pc_pro">
+		<option>неделю</option>
+		<option>месяц</option>
+		<option>год</option>
+		</select></div>
+</div>
+<div class="stationery">Канцелярскими принадлежностями для письма, открытками и тому подобным я закупаюсь на сумму около <input id="st_sum" type="text" placeholder="0">₽ в <select id="st_pro">
+		<option>неделю</option>
+		<option>месяц</option>
+		<option>год</option>
+	</select>.</div>
+<button>Подсчитать</button>
+<div id="result" class="hidden">
+	<div class="intro">Примерно…</div>
+	<div class="w"></div>
+	<div class="m"></div>
+	<div class="y"></div>
+	</div>
+<script>
+document.querySelector("#postcrossing").addEventListener("click", function() {
+	var elem = document.querySelector(".pc_count");
+	if (elem.classList.contains("hidden")) {
+		elem.classList.remove("hidden")
+	}
+	else {elem.classList.add("hidden")}
+})
+document.querySelector("button").addEventListener("click", function() {
+	var w = 0;
+	var m = 0;
+	var y = 0;
+	
+	var count_rus = document.querySelector("#count_rus").value ? Number(document.querySelector("#count_rus").value) : 0;
+	var count_other = document.querySelector("#count_other").value ? Number(document.querySelector("#count_other").value) : 0;
+	var total = document.querySelector("#total").value ? Number(document.querySelector("#total").value) : 0;
+	var total_pro = document.querySelector("#total_pro").value;
+	
+	var letter_average = (count_rus * prices.letter_rus + count_other * prices.letter_other) / (count_rus + count_other)
+	if (isNaN(letter_average)) {letter_average = 0};
+	var letter_costs = letter_average * total;
+	
+	switch (total_pro) {
+		case "неделю":
+			w = Math.round(letter_costs);
+			m = Math.round(letter_costs * 4.34524);
+			y = Math.round(letter_costs * 52.1429);
+			break;
+			
+		case "месяц":
+			w = Math.round(letter_costs / 4.34524);
+			m = Math.round(letter_costs);
+			y = Math.round(letter_costs * 12);
+			break;
+			
+		case "год":
+			w = Math.round(letter_costs / 52.1429);
+			m = Math.round(letter_costs / 12);
+			y = Math.round(letter_costs);
+			break;
+	}
+	
+	if (!document.querySelector(".pc_count").classList.contains("hidden")) {
+	
+		var pc_rus = document.querySelector("#pc_rus").checked;
+		var pc_other = document.querySelector("#pc_other").checked;
+		var pc_average = 0;
+		var pc_total = document.querySelector("#pc_total").value ? Number(document.querySelector("#pc_total").value) : 0;
+		var pc_pro = document.querySelector("#pc_pro").value;
+
+		if (pc_rus && pc_other) {
+			pc_average = (prices.pc_rus + prices.pc_other) / 2;
+		}
+		else if (pc_rus) {
+			pc_average = prices.pc_rus
+		}
+		else if (pc_other) {
+			pc_average = prices.pc_other
+		}
+
+		var pc_costs = pc_average * pc_total;
+
+		switch (pc_pro) {
+			case "неделю":
+				w += Math.round(pc_costs);
+				m += Math.round(pc_costs * 4.34524);
+				y += Math.round(pc_costs * 52.1429);
+				break;
+
+			case "месяц":
+				w += Math.round(pc_costs / 4.34524);
+				m += Math.round(pc_costs);
+				y += Math.round(pc_costs * 12);
+				break;
+
+			case "год":
+				w += Math.round(pc_costs / 52.1429);
+				m += Math.round(pc_costs / 12);
+				y += Math.round(pc_costs);
+				break;
+		}
+
+	}
+
+	var st_sum = document.querySelector("#st_sum").value ? Number(document.querySelector("#st_sum").value) : 0;
+	var st_pro = document.querySelector("#st_pro").value;
+	
+		switch (st_pro) {
+		case "неделю":
+			w += Math.round(st_sum);
+			m += Math.round(st_sum * 4.34524);
+			y += Math.round(st_sum * 52.1429);
+			break;
+			
+		case "месяц":
+			w += Math.round(st_sum / 4.34524);
+			m += Math.round(st_sum);
+			y += Math.round(st_sum * 12);
+			break;
+			
+		case "год":
+			w += Math.round(st_sum / 52.1429);
+			m += Math.round(st_sum / 12);
+			y += Math.round(st_sum);
+			break;
+	}
+	
+	if (isNaN(w)) {
+		alert("Проверьте корректность введённых данных!")
+	}
+	
+	else {
+		document.querySelector(".w").innerHTML = w + " рублей в неделю"
+		document.querySelector(".m").innerHTML = m + " рублей в месяц"
+		document.querySelector(".y").innerHTML = y + " рублей в год"
+
+		if (document.querySelector("#result").classList.contains("hidden")) {
+			document.querySelector("#result").classList.remove("hidden");
+		}
+	}
+
+})
+
+
+</script>
+</body>
+</html>
